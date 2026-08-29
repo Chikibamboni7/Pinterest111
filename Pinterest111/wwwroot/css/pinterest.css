@@ -27,12 +27,17 @@
   --pinterest-red: #E60023;
   --pinterest-dark: #8b000f;
   --muted: #6c757d;
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --text: #222222;
+  --muted-text: #6c757d;
 }
 
 /* Общая палитра */
 body {
-  background: #fff;
-  color: #222;
+  background: var(--bg);
+  color: var(--text);
+  transition: background-color .2s ease, color .2s ease;
 }
 
 /* Navbar */
@@ -90,3 +95,48 @@ a:hover {
 /* Мелкие правки для карточек и текста */
 .pin-meta { color: #333; font-size: .95rem; }
 .profile-avatar { width:88px; height:88px; border-radius:50%; object-fit:cover; border:2px solid #fff; box-shadow:0 1px 4px rgba(0,0,0,.08); }
+
+/* --- Тёмная тема --- */
+.theme-dark {
+  --bg: #0f1113;
+  --surface: #121316;
+  --text: #e6e6e6;
+  --muted-text: #b5b5b5;
+  --pinterest-red: #ff5a6a;
+  --pinterest-dark: #c43b48;
+}
+
+.theme-dark body,
+.theme-dark .container,
+.theme-dark .card {
+  background-color: var(--surface) !important;
+  color: var(--text) !important;
+}
+
+.theme-dark .navbar {
+  background-color: #0b0b0b !important;
+  border-bottom-color: rgba(255,255,255,0.06) !important;
+}
+
+.theme-dark .navbar-brand {
+  color: var(--pinterest-red) !important;
+}
+
+.theme-dark a { color: var(--pinterest-red) !important; }
+.theme-dark a:hover { color: var(--pinterest-dark) !important; }
+
+.theme-dark .btn-primary {
+  background-color: var(--pinterest-red) !important;
+  border-color: var(--pinterest-red) !important;
+}
+.theme-dark .btn-outline-primary {
+  color: var(--pinterest-red) !important;
+  border-color: rgba(255,255,255,0.12) !important;
+}
+
+.theme-dark .profile-avatar { border:2px solid rgba(255,255,255,0.04); box-shadow: none; }
+
+.theme-dark .pin-meta { color: var(--muted-text); }
+
+/* Smooth transitions */
+* { transition: background-color .18s ease, color .18s ease, border-color .18s ease; }

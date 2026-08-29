@@ -24,6 +24,9 @@
                     <a class="btn btn-link" asp-controller="Pins" asp-action="Create">Добавить</a>
                     <a class="btn btn-outline-primary" asp-controller="Register" asp-action="Index">Регистрация</a>
                     <a class="btn btn-primary" asp-controller="Account" asp-action="Login">Войти</a>
+
+                    <!-- Theme toggle -->
+                    <button id="themeToggle" class="btn btn-sm btn-outline-secondary rounded-circle" title="Переключить тему" aria-label="Toggle theme" type="button">🌙</button>
                 </div>
             </div>
         </nav>
@@ -44,6 +47,40 @@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        (function () {
+            const THEME_KEY = 'pinterest_theme';
+            const btn = document.getElementById('themeToggle');
+            const applyTheme = (theme) => {
+                if (theme === 'dark') {
+                    document.documentElement.classList.add('theme-dark');
+                    btn.textContent = '☀️';
+                } else {
+                    document.documentElement.classList.remove('theme-dark');
+                    btn.textContent = '🌙';
+                }
+            };
+
+            // init from localStorage or system preference
+            const saved = localStorage.getItem(THEME_KEY);
+            if (saved) {
+                applyTheme(saved);
+            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                applyTheme('dark');
+            } else {
+                applyTheme('light');
+            }
+
+            btn.addEventListener('click', () => {
+                const isDark = document.documentElement.classList.toggle('theme-dark');
+                const theme = isDark ? 'dark' : 'light';
+                localStorage.setItem(THEME_KEY, theme);
+                applyTheme(theme);
+            });
+        })();
+    </script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
