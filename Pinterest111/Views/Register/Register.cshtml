@@ -1,0 +1,164 @@
+@{
+    ViewData["Title"] = "Регистрация";
+}
+
+<div class="row justify-content-center align-items-center" style="min-height:70vh;">
+    <div class="col-md-6 d-none d-md-block">
+        <div class="p-4">
+            <h1 class="display-5">Добро пожаловать в учебный Pinterest</h1>
+            <p class="lead">Сохраняйте и делитесь идеями, создавайте доски и подписывайтесь на интересных людей.</p>
+            <div class="row g-2">
+                <div class="col-6">
+                    <img src="https://picsum.photos/seed/p1/400/300" class="img-fluid rounded" />
+                </div>
+                <div class="col-6">
+                    <img src="https://picsum.photos/seed/p2/400/300" class="img-fluid rounded" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-5">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h3 class="card-title mb-3">Создать аккаунт</h3>
+
+                <form id="registerForm" onsubmit="return false;" novalidate>
+                    <div class="mb-3">
+                        <label for="fullName" class="form-label">Имя и фамилия</label>
+                        <input type="text" class="form-control" id="fullName" placeholder="Иван Иванов" required>
+                        <div class="invalid-feedback">Укажите имя.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Имя пользователя</label>
+                        <input type="text" class="form-control" id="username" placeholder="username123" required>
+                        <div class="form-text">Будет видно другим пользователям.</div>
+                        <div class="invalid-feedback">Укажите имя пользователя.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" placeholder="name@example.com" required>
+                        <div class="invalid-feedback">Введите корректный email.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Пароль</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="password" minlength="6" placeholder="Минимум 6 символов" required>
+                            <button class="btn btn-outline-secondary" type="button" id="togglePassword">Показать</button>
+                            <div class="invalid-feedback">Введите пароль (минимум 6 символов).</div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="confirmPassword" class="form-label">Подтвердите пароль</label>
+                        <input type="password" class="form-control" id="confirmPassword" required>
+                        <div class="invalid-feedback">Пароли не совпадают.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Аватар (опционально)</label>
+                        <div class="d-flex gap-2 align-items-center">
+                            <img id="avatarPreview" src="https://via.placeholder.com/64" class="rounded-circle border" width="64" height="64" alt="preview">
+                            <div>
+                                <input class="form-control form-control-sm" type="file" id="avatarInput" accept="image/*">
+                                <div class="form-text">PNG/JPG, до 2 МБ.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-grid mb-2">
+                        <button id="submitBtn" class="btn btn-primary">Зарегистрироваться</button>
+                    </div>
+
+                    <div class="text-center">
+                        <small>Уже есть аккаунт? <a asp-controller="Home" asp-action="Index">Войти</a></small>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <style>
+            /* Небольшие стили для страницы регистрации */
+            #registerForm .form-control:invalid {
+                border-color: #dc3545;
+            }
+
+            #registerForm .form-control:valid {
+                border-color: #198754;
+            }
+        </style>
+
+        @section Scripts {
+            <script>
+                (function () {
+                    const form = document.getElementById('registerForm');
+                    const password = document.getElementById('password');
+                    const confirmPassword = document.getElementById('confirmPassword');
+                    const togglePassword = document.getElementById('togglePassword');
+                    const avatarInput = document.getElementById('avatarInput');
+                    const avatarPreview = document.getElementById('avatarPreview');
+                    const submitBtn = document.getElementById('submitBtn');
+
+                    togglePassword.addEventListener('click', () => {
+                        if (password.type === 'password') {
+                            password.type = 'text';
+                            togglePassword.textContent = 'Скрыть';
+                        } else {
+                            password.type = 'password';
+                            togglePassword.textContent = 'Показать';
+                        }
+                    });
+
+                    avatarInput.addEventListener('change', (e) => {
+                        const file = e.target.files[0];
+                        if (!file) return;
+                        if (!file.type.startsWith('image/')) return;
+                        const reader = new FileReader();
+                        reader.onload = () => avatarPreview.src = reader.result;
+                        reader.readAsDataURL(file);
+                    });
+
+                    function validate() {
+                        let ok = true;
+                        // базовая html5-валидация
+                        form.querySelectorAll('[required]').forEach(el => {
+                            if (!el.value) {
+                                el.classList.add('is-invalid');
+                                ok = false;
+                            } else {
+                                el.classList.remove('is-invalid');
+                            }
+                        });
+
+                        if (password.value.length < 6) {
+                            password.classList.add('is-invalid');
+                            ok = false;
+                        }
+
+                        if (password.value !== confirmPassword.value) {
+                            confirmPassword.classList.add('is-invalid');
+                            ok = false;
+                        } else {
+                            confirmPassword.classList.remove('is-invalid');
+                        }
+
+                        return ok;
+                    }
+
+                    submitBtn.addEventListener('click', () => {
+                        if (!validate()) return;
+                        // Так как это только фронтенд, отображаем сообщение вместо отправки
+                        const toast = document.createElement('div');
+                        toast.className = 'alert alert-success mt-3';
+                        toast.textContent = 'Интерфейс регистрации: данные приняты в браузере (без отправки на сервер).';
+                        form.prepend(toast);
+                        setTimeout(() => toast.remove(), 5000);
+                    });
+                })();
+            </script>
+        }
+    </div>
+</div>
