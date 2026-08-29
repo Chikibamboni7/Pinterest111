@@ -1,27 +1,33 @@
+@model Pinterest111.Models.PinCreateViewModel
 @{
-    ViewData["Title"] = "Добавить Pin";
+    ViewData["Title"] = "Р”РѕР±Р°РІРёС‚СЊ Pin";
 }
 
-<h3 class="mb-3">Добавить изображение (UI only)</h3>
+<h3 class="mb-3">Р”РѕР±Р°РІРёС‚СЊ РїРѕСЃС‚</h3>
 
-<form onsubmit="return false;">
-    <div class="mb-2">
-        <input class="form-control" placeholder="Название" />
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <form asp-controller="Pins" asp-action="Create" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="All" class="text-danger mb-2"></div>
+
+            <div class="mb-2">
+                <input asp-for="Title" class="form-control" placeholder="РќР°Р·РІР°РЅРёРµ" />
+                <span asp-validation-for="Title" class="text-danger small"></span>
+            </div>
+            <div class="mb-2">
+                <textarea asp-for="Description" class="form-control" rows="3" placeholder="РћРїРёСЃР°РЅРёРµ"></textarea>
+            </div>
+            <div class="mb-2">
+                <input asp-for="Image" accept="image/*" class="form-control" />
+                <span asp-validation-for="Image" class="text-danger small"></span>
+            </div>
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary">РћРїСѓР±Р»РёРєРѕРІР°С‚СЊ</button>
+            </div>
+        </form>
     </div>
-    <div class="mb-2">
-        <textarea class="form-control" rows="3" placeholder="Описание"></textarea>
-    </div>
-    <div class="mb-2">
-        <input type="file" accept="image/*" class="form-control" />
-    </div>
-    <div class="mb-2">
-        <select class="form-select">
-            <option>Выберите доску</option>
-            <option>Board 1</option>
-            <option>Board 2</option>
-        </select>
-    </div>
-    <div class="d-grid">
-        <button class="btn btn-primary">Опубликовать</button>
-    </div>
-</form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

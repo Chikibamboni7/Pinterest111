@@ -1,4 +1,4 @@
-@model dynamic
+@model Pinterest111.Models.Pin
 <div class="pin-card card border-0">
   <a asp-controller="Pins" asp-action="Details" asp-route-id="@Model.Id" class="text-decoration-none">
     <img src="@Model.ImageUrl" alt="@Model.Title" />
@@ -8,9 +8,6 @@
       <div>
         <a asp-controller="Profile" asp-action="Index" asp-route-username="@Model.Author" class="fw-semibold">@Model.Author</a>
         <div class="pin-meta">@Model.Title</div>
-      </div>
-      <div>
-        <button class="btn btn-sm btn-outline-secondary">Save</button>
       </div>
     </div>
   </div>

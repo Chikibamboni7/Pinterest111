@@ -1,36 +1,49 @@
+@model Pinterest111.Models.RegisterViewModel
 @{
-    ViewData["Title"] = "Регистрация";
+    ViewData["Title"] = "Р РµРіРёСЃС‚СЂР°С†РёСЏ";
 }
 
 <div class="row justify-content-center">
     <div class="col-md-5">
         <div class="card shadow-sm">
             <div class="card-body">
-                <h3 class="mb-3">Создать аккаунт</h3>
-                <form id="registerForm" onsubmit="return false;" novalidate>
+                <h3 class="mb-3">РЎРѕР·РґР°С‚СЊ Р°РєРєР°СѓРЅС‚</h3>
+
+                <form asp-controller="Register" asp-action="Index" method="post" enctype="multipart/form-data">
+                    <div asp-validation-summary="All" class="text-danger mb-2"></div>
+
                     <div class="mb-2">
-                        <input class="form-control" placeholder="Имя и фамилия" required />
+                        <input asp-for="FullName" class="form-control" placeholder="РРјСЏ Рё С„Р°РјРёР»РёСЏ" />
+                        <span asp-validation-for="FullName" class="text-danger small"></span>
                     </div>
                     <div class="mb-2">
-                        <input class="form-control" placeholder="Имя пользователя" required />
+                        <input asp-for="Username" class="form-control" placeholder="РРјСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ" />
+                        <span asp-validation-for="Username" class="text-danger small"></span>
                     </div>
                     <div class="mb-2">
-                        <input class="form-control" type="email" placeholder="Email" required />
+                        <input asp-for="Email" class="form-control" placeholder="Email" />
+                        <span asp-validation-for="Email" class="text-danger small"></span>
                     </div>
                     <div class="mb-2">
-                        <input class="form-control" type="password" placeholder="Пароль" minlength="6" required />
+                        <input asp-for="Password" class="form-control" placeholder="РџР°СЂРѕР»СЊ" />
+                        <span asp-validation-for="Password" class="text-danger small"></span>
                     </div>
                     <div class="mb-2">
-                        <input class="form-control" type="password" placeholder="Подтвердите пароль" required />
+                        <input asp-for="ConfirmPassword" class="form-control" placeholder="РџРѕРґС‚РІРµСЂРґРёС‚Рµ РїР°СЂРѕР»СЊ" />
+                        <span asp-validation-for="ConfirmPassword" class="text-danger small"></span>
                     </div>
 
                     <div class="mb-3 d-flex align-items-center gap-3">
                         <img id="avatarPreview" src="https://via.placeholder.com/64" class="profile-avatar" />
-                        <input type="file" id="avatarInput" accept="image/*" class="form-control form-control-sm" />
+                        <input asp-for="Avatar" accept="image/*" class="form-control form-control-sm" />
                     </div>
 
                     <div class="d-grid">
-                        <button class="btn btn-primary">Зарегистрироваться</button>
+                        <button type="submit" class="btn btn-primary">Р—Р°СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°С‚СЊСЃСЏ</button>
+                    </div>
+
+                    <div class="text-center mt-2">
+                        <small>РЈР¶Рµ РµСЃС‚СЊ Р°РєРєР°СѓРЅС‚? <a asp-controller="Account" asp-action="Login">Р’РѕР№С‚Рё</a></small>
                     </div>
                 </form>
             </div>
@@ -39,18 +52,19 @@
 </div>
 
 @section Scripts {
-<script>
-  (function(){
-    const avatar = document.getElementById('avatarInput');
-    const preview = document.getElementById('avatarPreview');
-    avatar?.addEventListener('change', e => {
-      const f = e.target.files?.[0];
-      if (!f) return;
-      if (!f.type.startsWith('image/')) return;
-      const r = new FileReader();
-      r.onload = () => preview.src = r.result;
-      r.readAsDataURL(f);
-    });
-  })();
-</script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+      (function(){
+        const avatar = document.getElementById('Avatar');
+        const preview = document.getElementById('avatarPreview');
+        avatar?.addEventListener('change', e => {
+          const f = e.target.files?.[0];
+          if (!f) return;
+          if (!f.type.startsWith('image/')) return;
+          const r = new FileReader();
+          r.onload = () => preview.src = r.result;
+          r.readAsDataURL(f);
+        });
+      })();
+    </script>
 }

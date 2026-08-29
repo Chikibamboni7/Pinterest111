@@ -1,26 +1,16 @@
-﻿@{
-    ViewData["Title"] = "Лента";
+@model List<Pinterest111.Models.Pin>
+@{
+    ViewData["Title"] = "Главная";
 }
 
-<h2 class="mb-3">Главная лента</h2>
+@if (!Model.Any())
+{
+    <p class="text-muted">Пока нет пинов.</p>
+}
 
-<div class="pin-grid" id="feed">
-    @* Статические карточки для демо *@
-    @for (int i = 1; i <= 9; i++)
+<div class="pin-grid">
+    @foreach (var pin in Model)
     {
-        <div class="pin-card">
-            <a asp-controller="Pins" asp-action="Details" asp-route-id="@i">
-                <img src="https://picsum.photos/seed/p@i/600/400" alt="pin-@i" />
-            </a>
-            <div class="mt-2 d-flex justify-content-between">
-                <div>
-                    <a asp-controller="Profile" asp-action="Index" asp-route-username="user@i" class="fw-semibold">user@i</a>
-                    <div class="pin-meta">Идея @i — вдохновение</div>
-                </div>
-                <div>
-                    <button class="btn btn-sm btn-outline-secondary">Save</button>
-                </div>
-            </div>
-        </div>
+        @await Html.PartialAsync("_PinCard", pin)
     }
 </div>

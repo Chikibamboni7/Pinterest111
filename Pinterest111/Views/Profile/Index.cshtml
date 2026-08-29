@@ -1,25 +1,42 @@
+@model Pinterest111.Models.ProfileViewModel
 @{
-    ViewData["Title"] = "Профиль";
+    ViewData["Title"] = Model.User.Username;
 }
 
-<div class="profile-header mb-3">
-    <img src="https://picsum.photos/seed/avatar/200/200" class="profile-avatar" />
+<div class="profile-header mb-3 d-flex align-items-center gap-3">
+    <img src="@Model.User.AvatarUrl" class="profile-avatar" width="80" height="80" />
     <div>
-        <h4 class="mb-0">user_example</h4>
-        <div class="text-muted">10 подписчиков • 45 подписок</div>
+        <h4 class="mb-0">@Model.User.Username</h4>
+        <div class="text-muted">@Model.User.FullName</div>
+
+        @if (!string.IsNullOrWhiteSpace(Model.User.Bio))
+        {
+            <p class="mt-2 mb-0">@Model.User.Bio</p>
+        }
+
         <div class="mt-2">
-            <button class="btn btn-outline-primary">Подписаться</button>
-            <a class="btn btn-link">Редактировать профиль</a>
+            @if (Model.IsOwnProfile)
+            {
+                <a class="btn btn-outline-secondary btn-sm" asp-controller="Profile" asp-action="Edit">Р РµРґР°РєС‚РёСЂРѕРІР°С‚СЊ РїСЂРѕС„РёР»СЊ</a>
+            }
+            else
+            {
+                <button class="btn btn-outline-primary btn-sm">РџРѕРґРїРёСЃР°С‚СЊСЃСЏ</button>
+            }
         </div>
     </div>
 </div>
 
-<h5 class="mb-3">Пины пользователя</h5>
+<h5 class="mb-3">РџРёРЅС‹ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ</h5>
+
+@if (!Model.Pins.Any())
+{
+    <p class="text-muted">РџРѕРєР° РЅРµС‚ РїРёРЅРѕРІ.</p>
+}
+
 <div class="pin-grid">
-    @for (int i = 0; i < 6; i++)
+    @foreach (var pin in Model.Pins)
     {
-        <div class="pin-card">
-            <img src="https://picsum.photos/seed/u@i/600/400" />
-        </div>
+        @await Html.PartialAsync("_PinCard", pin)
     }
 </div>

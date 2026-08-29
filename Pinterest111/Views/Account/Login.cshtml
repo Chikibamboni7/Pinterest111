@@ -1,38 +1,40 @@
+@model Pinterest111.Models.LoginViewModel
 @{
-    ViewData["Title"] = "Вход";
+    ViewData["Title"] = "Р’С…РѕРґ";
 }
 
 <div class="row justify-content-center" style="min-height:70vh; align-items:center;">
     <div class="col-md-4">
         <div class="card shadow-sm">
             <div class="card-body">
-                <h3 class="mb-3 text-center">Войти в Pinterest111</h3>
+                <h3 class="mb-3 text-center">Р’РѕР№С‚Рё РІ Pinterest111</h3>
 
-                <form id="loginForm" onsubmit="return false;" novalidate>
+                <form asp-controller="Account" asp-action="Login" method="post">
+                    <div asp-validation-summary="All" class="text-danger mb-2"></div>
+
                     <div class="mb-3">
-                        <label for="loginIdentifier" class="form-label">Email или имя пользователя</label>
-                        <input id="loginIdentifier" class="form-control" placeholder="Email или username" required />
-                        <div class="invalid-feedback">Укажите email или имя пользователя.</div>
+                        <label asp-for="Identifier" class="form-label"></label>
+                        <input asp-for="Identifier" class="form-control" placeholder="Email РёР»Рё username" />
+                        <span asp-validation-for="Identifier" class="text-danger small"></span>
                     </div>
 
                     <div class="mb-3">
-                        <label for="loginPassword" class="form-label">Пароль</label>
-                        <input id="loginPassword" type="password" class="form-control" placeholder="Пароль" required />
-                        <div class="invalid-feedback">Укажите пароль.</div>
+                        <label asp-for="Password" class="form-label"></label>
+                        <input asp-for="Password" class="form-control" placeholder="РџР°СЂРѕР»СЊ" />
+                        <span asp-validation-for="Password" class="text-danger small"></span>
                     </div>
 
                     <div class="mb-3 form-check">
-                        <input type="checkbox" class="form-check-input" id="rememberMe" />
-                        <label class="form-check-label" for="rememberMe">Запомнить меня</label>
+                        <input asp-for="RememberMe" class="form-check-input" />
+                        <label asp-for="RememberMe" class="form-check-label"></label>
                     </div>
 
                     <div class="d-grid mb-2">
-                        <button id="loginBtn" class="btn btn-primary">Войти</button>
+                        <button type="submit" class="btn btn-primary">Р’РѕР№С‚Рё</button>
                     </div>
 
-                    <div class="d-flex justify-content-between">
-                        <a asp-controller="Register" asp-action="Index">Создать аккаунт</a>
-                        <a href="#" id="forgotLink">Забыли пароль?</a>
+                    <div class="d-flex justify-content-center">
+                        <a asp-controller="Register" asp-action="Index">РЎРѕР·РґР°С‚СЊ Р°РєРєР°СѓРЅС‚</a>
                     </div>
                 </form>
             </div>
@@ -41,35 +43,5 @@
 </div>
 
 @section Scripts {
-<script>
-(function () {
-    const form = document.getElementById('loginForm');
-    const loginBtn = document.getElementById('loginBtn');
-    const identifier = document.getElementById('loginIdentifier');
-    const password = document.getElementById('loginPassword');
-
-    function validate() {
-        let ok = true;
-        [identifier, password].forEach(el => {
-            if (!el.value.trim()) {
-                el.classList.add('is-invalid');
-                ok = false;
-            } else {
-                el.classList.remove('is-invalid');
-            }
-        });
-        return ok;
-    }
-
-    loginBtn.addEventListener('click', () => {
-        if (!validate()) return;
-        // UI-only: показываем сообщение вместо реальной авторизации
-        const alert = document.createElement('div');
-        alert.className = 'alert alert-success mt-3';
-        alert.textContent = 'Вход (UI only): данные приняты в браузере.';
-        form.prepend(alert);
-        setTimeout(() => alert.remove(), 4000);
-    });
-})();
-</script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

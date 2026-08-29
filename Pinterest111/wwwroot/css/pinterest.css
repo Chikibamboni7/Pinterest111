@@ -138,5 +138,57 @@ a:hover {
 
 .theme-dark .pin-meta { color: var(--muted-text); }
 
+/* Форма: поля ввода, textarea, select */
+.theme-dark .form-control,
+.theme-dark .form-select {
+  background-color: var(--surface) !important;
+  color: var(--text) !important;
+  border-color: rgba(255,255,255,0.12) !important;
+}
+.theme-dark .form-control::placeholder {
+  color: var(--muted-text) !important;
+}
+.theme-dark .form-control:focus,
+.theme-dark .form-select:focus {
+  background-color: var(--surface) !important;
+  color: var(--text) !important;
+}
+.theme-dark .form-label,
+.theme-dark .form-check-label,
+.theme-dark .form-text,
+.theme-dark h3, .theme-dark h4, .theme-dark h5 {
+  color: var(--text) !important;
+}
+
+/* Карточки логина/регистрации (Bootstrap .card) */
+.theme-dark .card {
+  border-color: rgba(255,255,255,0.08) !important;
+}
+.theme-dark .shadow-sm {
+  box-shadow: 0 .125rem .25rem rgba(0,0,0,.4) !important;
+}
+
+/* Список результатов поиска и прочие list-group */
+.theme-dark .list-group-item {
+  background-color: var(--surface) !important;
+  color: var(--text) !important;
+  border-color: rgba(255,255,255,0.08) !important;
+}
+
+/* Кнопки btn-outline-secondary в тёмной теме */
+.theme-dark .btn-outline-secondary {
+  color: var(--text) !important;
+  border-color: rgba(255,255,255,0.25) !important;
+}
+.theme-dark .btn-outline-secondary:hover {
+  background-color: rgba(255,255,255,0.08) !important;
+  color: var(--text) !important;
+}
+
+/* Текст muted в тёмной теме читаемее */
+.theme-dark .text-muted {
+  color: var(--muted-text) !important;
+}
+
 /* Smooth transitions */
 * { transition: background-color .18s ease, color .18s ease, border-color .18s ease; }
