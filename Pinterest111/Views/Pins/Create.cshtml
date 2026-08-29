@@ -1,0 +1,27 @@
+@{
+    ViewData["Title"] = "Добавить Pin";
+}
+
+<h3 class="mb-3">Добавить изображение (UI only)</h3>
+
+<form onsubmit="return false;">
+    <div class="mb-2">
+        <input class="form-control" placeholder="Название" />
+    </div>
+    <div class="mb-2">
+        <textarea class="form-control" rows="3" placeholder="Описание"></textarea>
+    </div>
+    <div class="mb-2">
+        <input type="file" accept="image/*" class="form-control" />
+    </div>
+    <div class="mb-2">
+        <select class="form-select">
+            <option>Выберите доску</option>
+            <option>Board 1</option>
+            <option>Board 2</option>
+        </select>
+    </div>
+    <div class="d-grid">
+        <button class="btn btn-primary">Опубликовать</button>
+    </div>
+</form>

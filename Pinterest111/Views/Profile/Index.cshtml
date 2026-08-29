@@ -1,0 +1,25 @@
+@{
+    ViewData["Title"] = "Профиль";
+}
+
+<div class="profile-header mb-3">
+    <img src="https://picsum.photos/seed/avatar/200/200" class="profile-avatar" />
+    <div>
+        <h4 class="mb-0">user_example</h4>
+        <div class="text-muted">10 подписчиков • 45 подписок</div>
+        <div class="mt-2">
+            <button class="btn btn-outline-primary">Подписаться</button>
+            <a class="btn btn-link">Редактировать профиль</a>
+        </div>
+    </div>
+</div>
+
+<h5 class="mb-3">Пины пользователя</h5>
+<div class="pin-grid">
+    @for (int i = 0; i < 6; i++)
+    {
+        <div class="pin-card">
+            <img src="https://picsum.photos/seed/u@i/600/400" />
+        </div>
+    }
+</div>

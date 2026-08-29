@@ -1,0 +1,92 @@
+/* Базовые правила сетки pins */
+.pin-grid {
+  column-count: 1;
+  column-gap: 1rem;
+}
+@media (min-width: 576px) { .pin-grid { column-count: 2; } }
+@media (min-width: 992px) { .pin-grid { column-count: 3; } }
+.pin-card {
+  display: inline-block;
+  width: 100%;
+  margin: 0 0 1rem;
+}
+.pin-card img {
+  width: 100%;
+  display: block;
+  border-radius: 8px;
+  object-fit: cover;
+}
+/* Card footer */
+.pin-meta { font-size: 0.9rem; color: #444; }
+.pin-actions { margin-top: 0.5rem; }
+.search-form { max-width: 720px; width: 100%; }
+.profile-header { display:flex; gap:1rem; align-items:center; }
+.profile-avatar { width:88px; height:88px; border-radius:50%; object-fit:cover; }
+
+:root {
+  --pinterest-red: #E60023;
+  --pinterest-dark: #8b000f;
+  --muted: #6c757d;
+}
+
+/* Общая палитра */
+body {
+  background: #fff;
+  color: #222;
+}
+
+/* Navbar */
+.navbar-brand {
+  color: var(--pinterest-red) !important;
+  font-weight: 700;
+  letter-spacing: .4px;
+}
+
+/* Кнопки: primary -> pinterest red */
+.btn-primary {
+  background-color: var(--pinterest-red) !important;
+  border-color: var(--pinterest-red) !important;
+  color: #fff !important;
+}
+.btn-primary:hover, .btn-primary:focus {
+  background-color: var(--pinterest-dark) !important;
+  border-color: var(--pinterest-dark) !important;
+}
+
+/* outline primary -> red border */
+.btn-outline-primary {
+  color: var(--pinterest-red) !important;
+  border-color: var(--pinterest-red) !important;
+  background-color: transparent !important;
+}
+.btn-outline-primary:hover {
+  color: #fff !important;
+  background-color: var(--pinterest-red) !important;
+  border-color: var(--pinterest-dark) !important;
+}
+
+/* Links and accents */
+a {
+  color: var(--pinterest-red);
+}
+a:hover {
+  color: var(--pinterest-dark);
+}
+
+/* Search input rounded look */
+.search-form .form-control {
+  border-radius: 999px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+/* Pin grid styles (если используются) */
+.pin-grid { column-gap: 1rem; }
+@media (min-width: 576px) { .pin-grid { column-count: 2; } }
+@media (min-width: 992px) { .pin-grid { column-count: 3; } }
+
+.pin-card img { border-radius: 8px; display:block; width:100%; }
+
+/* Мелкие правки для карточек и текста */
+.pin-meta { color: #333; font-size: .95rem; }
+.profile-avatar { width:88px; height:88px; border-radius:50%; object-fit:cover; border:2px solid #fff; box-shadow:0 1px 4px rgba(0,0,0,.08); }

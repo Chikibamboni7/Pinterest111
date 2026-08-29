@@ -1,0 +1,75 @@
+@{
+    ViewData["Title"] = "Вход";
+}
+
+<div class="row justify-content-center" style="min-height:70vh; align-items:center;">
+    <div class="col-md-4">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h3 class="mb-3 text-center">Войти в Pinterest111</h3>
+
+                <form id="loginForm" onsubmit="return false;" novalidate>
+                    <div class="mb-3">
+                        <label for="loginIdentifier" class="form-label">Email или имя пользователя</label>
+                        <input id="loginIdentifier" class="form-control" placeholder="Email или username" required />
+                        <div class="invalid-feedback">Укажите email или имя пользователя.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="loginPassword" class="form-label">Пароль</label>
+                        <input id="loginPassword" type="password" class="form-control" placeholder="Пароль" required />
+                        <div class="invalid-feedback">Укажите пароль.</div>
+                    </div>
+
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="rememberMe" />
+                        <label class="form-check-label" for="rememberMe">Запомнить меня</label>
+                    </div>
+
+                    <div class="d-grid mb-2">
+                        <button id="loginBtn" class="btn btn-primary">Войти</button>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <a asp-controller="Register" asp-action="Index">Создать аккаунт</a>
+                        <a href="#" id="forgotLink">Забыли пароль?</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+(function () {
+    const form = document.getElementById('loginForm');
+    const loginBtn = document.getElementById('loginBtn');
+    const identifier = document.getElementById('loginIdentifier');
+    const password = document.getElementById('loginPassword');
+
+    function validate() {
+        let ok = true;
+        [identifier, password].forEach(el => {
+            if (!el.value.trim()) {
+                el.classList.add('is-invalid');
+                ok = false;
+            } else {
+                el.classList.remove('is-invalid');
+            }
+        });
+        return ok;
+    }
+
+    loginBtn.addEventListener('click', () => {
+        if (!validate()) return;
+        // UI-only: показываем сообщение вместо реальной авторизации
+        const alert = document.createElement('div');
+        alert.className = 'alert alert-success mt-3';
+        alert.textContent = 'Вход (UI only): данные приняты в браузере.';
+        form.prepend(alert);
+        setTimeout(() => alert.remove(), 4000);
+    });
+})();
+</script>
+}
