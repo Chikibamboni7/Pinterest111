@@ -60,6 +60,26 @@ namespace Pinterest111.Services
         }
 
         /// <summary>
+        /// Удаляет пин по id. Возвращает true, если пин был найден и удалён.
+        /// </summary>
+        public bool Delete(int id)
+        {
+            lock (_lock)
+            {
+                var all = GetAll();
+                var removed = all.RemoveAll(p => p.Id == id) > 0;
+
+                if (removed)
+                {
+                    var lines = all.Select(p => JsonSerializer.Serialize(p));
+                    File.WriteAllLines(_filePath, lines);
+                }
+
+                return removed;
+            }
+        }
+
+        /// <summary>
         /// При смене username у пользователя переносим авторство его пинов на новое имя,
         /// иначе ссылки на профиль в старых постах будут вести на несуществующего пользователя.
         /// </summary>

@@ -63,6 +63,51 @@ namespace Pinterest111.Controllers
             return View(pin);
         }
 
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(int id)
+        {
+            var pin = _pins.GetById(id);
+            if (pin == null) return NotFound();
+
+            // Удалять пин может только его автор
+            if (!string.Equals(pin.Author, User.Identity!.Name, StringComparison.OrdinalIgnoreCase))
+            {
+                return Forbid();
+            }
+
+            _pins.Delete(id);
+
+            // Пытаемся удалить файл изображения, если он лежит в uploads
+            if (!string.IsNullOrWhiteSpace(pin.ImageUrl) && pin.ImageUrl.StartsWith("/uploads/"))
+            {
+                try
+                {
+                    var imagePath = Path.Combine(_env.WebRootPath, pin.ImageUrl.TrimStart('/'));
+                    if (System.IO.File.Exists(imagePath))
+                    {
+                        System.IO.File.Delete(imagePath);
+                    }
+                }
+                catch
+                {
+                    // Не критично, если файл не получилось удалить
+                }
+            }
+
+            TempData["Message"] = "Пин удалён";
+
+            // Возвращаемся туда, откуда пришли (профиль, главная и т.д.), если это безопасный локальный адрес
+            var referer = Request.Headers["Referer"].ToString();
+            if (!string.IsNullOrEmpty(referer) && Url.IsLocalUrl(referer))
+            {
+                return Redirect(referer);
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
         private async Task<string> SaveUploadedFileAsync(IFormFile file, string subfolder)
         {
             var uploadsDir = Path.Combine(_env.WebRootPath, "uploads", subfolder);

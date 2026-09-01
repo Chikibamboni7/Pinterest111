@@ -1,14 +1,22 @@
 @model Pinterest111.Models.Pin
 <div class="pin-card card border-0">
-  <a asp-controller="Pins" asp-action="Details" asp-route-id="@Model.Id" class="text-decoration-none">
-    <img src="@Model.ImageUrl" alt="@Model.Title" />
-  </a>
-  <div class="mt-2">
-    <div class="d-flex justify-content-between align-items-start">
-      <div>
-        <a asp-controller="Profile" asp-action="Index" asp-route-username="@Model.Author" class="fw-semibold">@Model.Author</a>
-        <div class="pin-meta">@Model.Title</div>
-      </div>
+    <a asp-controller="Pins" asp-action="Details" asp-route-id="@Model.Id" class="text-decoration-none">
+        <img src="@Model.ImageUrl" alt="@Model.Title" />
+    </a>
+    @if (string.Equals(User.Identity?.Name, Model.Author, StringComparison.OrdinalIgnoreCase))
+    {
+        <form asp-controller="Pins" asp-action="Delete" asp-route-id="@Model.Id" method="post"
+              class="pin-delete-form" onsubmit="return confirm('Удалить этот пин?');">
+            @Html.AntiForgeryToken()
+            <button type="submit" class="pin-delete-btn" title="Удалить пин" aria-label="Удалить пин">&times;</button>
+        </form>
+    }
+    <div class="mt-2">
+        <div class="d-flex justify-content-between align-items-start">
+            <div>
+                <a asp-controller="Profile" asp-action="Index" asp-route-username="@Model.Author" class="fw-semibold">@Model.Author</a>
+                <div class="pin-meta">@Model.Title</div>
+            </div>
+        </div>
     </div>
-  </div>
 </div>

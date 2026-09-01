@@ -192,3 +192,42 @@ a:hover {
 
 /* Smooth transitions */
 * { transition: background-color .18s ease, color .18s ease, border-color .18s ease; }
+
+
+/* Кнопка удаления пина (крестик поверх картинки) */
+.pin-card {
+    position: relative;
+}
+
+.pin-delete-form {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    margin: 0;
+    z-index: 2;
+}
+
+.pin-delete-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    font-size: 18px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity .15s ease, background .15s ease;
+}
+
+.pin-card:hover .pin-delete-btn {
+    opacity: 1;
+}
+
+.pin-delete-btn:hover {
+    background: rgba(200, 0, 0, 0.85);
+}
