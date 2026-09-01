@@ -9,6 +9,7 @@ builder.Services.AddControllersWithViews();
 // "База данных" на .txt файлах
 builder.Services.AddSingleton<FileUserStore>();
 builder.Services.AddSingleton<FilePinStore>();
+builder.Services.AddSingleton<FileBoardStore>(); // добавлено
 
 // Cookie-аутентификация
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)

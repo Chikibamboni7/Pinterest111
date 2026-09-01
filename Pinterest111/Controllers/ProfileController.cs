@@ -12,12 +12,14 @@ namespace Pinterest111.Controllers
     {
         private readonly FileUserStore _users;
         private readonly FilePinStore _pins;
+        private readonly FileBoardStore _boards;
         private readonly IWebHostEnvironment _env;
 
-        public ProfileController(FileUserStore users, FilePinStore pins, IWebHostEnvironment env)
+        public ProfileController(FileUserStore users, FilePinStore pins, FileBoardStore boards, IWebHostEnvironment env)
         {
             _users = users;
             _pins = pins;
+            _boards = boards;
             _env = env;
         }
 
@@ -27,12 +29,14 @@ namespace Pinterest111.Controllers
             if (user == null) return NotFound();
 
             var pins = _pins.GetByAuthor(user.Username);
+            var boards = _boards.GetByAuthor(user.Username);
 
             var vm = new ProfileViewModel
             {
                 User = user,
                 Pins = pins,
-                IsOwnProfile = string.Equals(User.Identity?.Name, user.Username, StringComparison.OrdinalIgnoreCase)
+                IsOwnProfile = string.Equals(User.Identity?.Name, user.Username, StringComparison.OrdinalIgnoreCase),
+                Boards = boards
             };
 
             return View(vm);

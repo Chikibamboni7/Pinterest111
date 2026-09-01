@@ -1,0 +1,49 @@
+﻿@model Pinterest111.Models.BoardDetailsViewModel
+@{
+    ViewData["Title"] = Model.Board.Title;
+}
+
+<div class="d-flex justify-content-between align-items-start mb-3">
+    <div>
+        <h3 class="mb-0">@Model.Board.Title</h3>
+        <div class="text-muted">@Model.Board.Description</div>
+        <div class="text-muted small">Создатель: <a asp-controller="Profile" asp-action="Index" asp-route-username="@Model.Board.Author">@Model.Board.Author</a></div>
+    </div>
+
+    @if (Model.IsOwner)
+    {
+        <div class="d-flex gap-2">
+            <form asp-controller="Boards" asp-action="Delete" method="post" asp-route-id="@Model.Board.Id" onsubmit="return confirm('Удалить доску?');">
+                @Html.AntiForgeryToken()
+                <button class="btn btn-outline-danger btn-sm">Удалить доску</button>
+            </form>
+        </div>
+    }
+</div>
+
+<h5 class="mb-3">Пины в доске (@Model.Pins.Count)</h5>
+
+@if (!Model.Pins.Any())
+{
+    <p class="text-muted">Пины ещё не добавлены.</p>
+}
+else
+{
+    <div class="pin-grid">
+        @foreach (var pin in Model.Pins)
+        {
+            <div class="position-relative">
+                @await Html.PartialAsync("_PinCard", pin)
+                @if (Model.IsOwner)
+                {
+                    <form asp-controller="Boards" asp-action="RemovePin" method="post" class="position-absolute" style="top:8px; right:8px;">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="boardId" value="@Model.Board.Id" />
+                        <input type="hidden" name="pinId" value="@pin.Id" />
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Удалить</button>
+                    </form>
+                }
+            </div>
+        }
+    </div>
+}
