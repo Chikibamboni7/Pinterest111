@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Pinterest111</title>
+    <title>@ViewData["Title"] - Pinterest</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/pinterest.css" asp-append-version="true" />
@@ -12,7 +12,7 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand fw-bold" asp-controller="Home" asp-action="Index">Pinterest111</a>
+                <a class="navbar-brand fw-bold" asp-controller="Home" asp-action="Index">Pinterest</a>
 
                 <form class="d-flex mx-auto search-form" role="search" asp-controller="Search" asp-action="Results">
                     <input class="form-control me-2 rounded-pill" type="search" placeholder="Поиск идей, авторов, досок" aria-label="Search" name="q">
@@ -20,8 +20,8 @@
                 </form>
 
                 <div class="d-flex align-items-center gap-2">
-                    <a class="btn btn-link" asp-controller="Boards" asp-action="Index">Доски</a>
-                    <a class="btn btn-link" asp-controller="Pins" asp-action="Create">Добавить</a>
+                    <a class="btn btn-link text-danger" asp-controller="Boards" asp-action="Index">Доски</a>
+                    <a class="btn btn-link text-danger" asp-controller="Pins" asp-action="Create">Добавить</a>
                     @if (User.Identity != null && User.Identity.IsAuthenticated)
                     {
                         <a class="btn btn-link" asp-controller="Profile" asp-action="Index" asp-route-username="@User.Identity.Name">@User.Identity.Name</a>
@@ -50,7 +50,7 @@
 
     <footer class="border-top text-muted py-3 mt-4">
         <div class="container d-flex justify-content-between">
-            <div>&copy; 2026 - Pinterest111</div>
+            <div>&copy; 2026 - Pinterest</div>
             <div><a asp-controller="Home" asp-action="Privacy">Privacy</a></div>
         </div>
     </footer>
